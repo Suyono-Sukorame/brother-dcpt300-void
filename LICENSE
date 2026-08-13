@@ -1,0 +1,48 @@
+Brother DCP-T300 Void Linux packaging repository
+Copyright (C) 2026 the repository contributors
+
+This repository contains packaging recipes to build the Brother DCP-T300
+printer driver for Void Linux. It is NOT a single-work project: different
+parts are licensed differently.
+
+1. Packaging files (srcpkgs/*/template)
+   ------------------------------------
+   The xbps-src build templates are plain shell scripts describing how to
+   fetch, build and package upstream software. They are provided under the
+   terms of the Creative Commons Zero (CC0 1.0) license, or, at your option,
+   the ISC license. No warranty of any kind is provided.
+
+   <https://creativecommons.org/publicdomain/zero/1.0/>
+   <https://opensource.org/license/isc-license>
+
+2. Static CUPS wrapper (srcpkgs/brother-dcpt300-cupswrapper/files/...)
+   -------------------------------------------------------------------
+   The static CUPS filter wrapper `brother_lpdwrapper_dcpt300` is derived
+   from the upstream Brother `cupswrapperdcpt300` script, whose package
+   metadata declares "Copyright: GPL". The wrapper is therefore licensed
+   under the GNU General Public License, version 2 or (at your option) any
+   later version, as published by the Free Software Foundation.
+
+   <https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt>
+
+3. Proprietary Brother binaries
+   ----------------------------
+   The actual printer driver binaries (brdcpt300filter, brcupsconfpt1,
+   brprintconf_dcpt300, filters, firmware/LUT data files and the PPD) are
+   proprietary software owned by Brother Industries, Ltd. They are NOT
+   distributed from this repository and are NOT covered by the licenses
+   above.
+
+   They are downloaded automatically at build time from the official
+   Brother download server using the `distfiles` and `checksum` declared in
+   the build templates, and are used under Brother's own license terms.
+
+4. No redistribution rights
+   ------------------------
+   This repository does not grant any right to redistribute the proprietary
+   Brother binaries. Redistribution of those binaries is governed solely by
+   Brother Industries, Ltd. and must be performed in accordance with their
+   terms.
+
+By using this repository you accept that you are responsible for complying
+with the license terms of every component you build and install.

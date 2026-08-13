@@ -1,0 +1,29 @@
+# Build artifacts
+*.xbps
+*.xbps.sig
+*.deb
+*.rpm
+*.apk
+*.tar
+*.tar.gz
+*.tgz
+*.tar.bz2
+*.tbz2
+*.tar.xz
+*.txz
+*.tar.zst
+*.tzst
+*.zip
+
+# void-packages build trees (should not live in this repository)
+masterdir/
+masterdir-*/
+hostdir/
+void-packages/
+cache/
+.tmp/
+tmp/
+
+# Workspace / audit leftovers (never publish proprietary Brother files)
+downloads/
+analysis/
