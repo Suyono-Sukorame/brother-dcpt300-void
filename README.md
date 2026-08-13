@@ -6,15 +6,27 @@ XBPS packages for Void Linux using `xbps-src` from
 
 ## Status
 
-- [x] Build validation (x86_64) passed for both packages in an isolated Void
-      Linux container using `xbps-src`; the resulting `.xbps` packages were
-      inspected but **not installed**.
-- [ ] Physical printing — **not tested yet**
-- [ ] Scanner — **not tested yet**
-- [ ] i686 build — **not built yet** (template supports `i686` and `x86_64`)
+- [x] Build validation passed for both packages (x86_64 and i686) in an
+      isolated Void Linux container using `xbps-src`.
+- [x] Physical printing — **TESTED — SUCCESSFUL** on Void Linux x86_64 with
+      CUPS 2.4.x, using a Brother DCP-T300 over USB (VID:PID `04f9:0393`)
+      and driver version 3.0.2. A one-page document printed successfully.
+- [x] Scanner (CLI/SANE) — **TESTED — SUCCESSFUL** in an isolated Void Linux
+      container using `brother-brscan4` (SANE backend `brother4`, device
+      `brother4:bus2;dev4`, USB VID:PID `04f9:0393`). A scan produced a valid
+      PNG. The scanner backend is a separate package, **not** part of this
+      repository.
+- [ ] Scanner (Simple Scan GUI) — installed and **detects** the DCP-T300, but
+      a physical scan from the GUI was **not** validated: the container cannot
+      claim the USB interface exclusively while the host owns the device
+      (host-side USB claim). This is a container limitation, not a driver
+      defect — scanning works via the CLI/SANE path.
+- [ ] i686 physical printing — **not tested yet** (the i686 build succeeds,
+      but has not been exercised on physical hardware)
 
-No printer queue was created and no CUPS configuration was touched while
-developing these recipes.
+During development and testing, the driver packages were installed and a
+printer queue was exercised **only inside an isolated Void Linux container**.
+No changes were made to the Ubuntu host.
 
 ## Packages
 
@@ -66,6 +78,11 @@ licensing boundaries.
 - Dependency notes: `a2ps` and `ghostscript` are needed by the LPR filter
   chain (`filterdcpt300`, `psconvertij2`), `psutils` is used by the CUPS
   wrapper for N-up features, and `cups` provides the filter directory.
+- The runtime configuration file
+  `/opt/brother/Printers/dcpt300/inf/brdcpt300rc` is written at setup time
+  by `brprintconf_dcpt300` (driven by `brcupsconfpt1`) and reflects the
+  user's printer settings, so it is declared in `mutable_files` and
+  preserved across package upgrades.
 
 ## Building
 
@@ -97,5 +114,7 @@ lpadmin -p dcpt300 -E -v usb://Brother/DCP-T300 \
     -P /usr/share/ppd/Brother/brother_dcpt300_printer_en.ppd
 ```
 
-> **Note:** printing has not been physically tested yet. Adjust the device URI
-> (`lpoptions -p dcpt300 -o ...`) to match your connection.
+> **Note:** physical printing has been verified successfully on Void Linux
+> x86_64 (CUPS 2.4.x). The USB URI shown above is the one reported by the
+> CUPS USB backend; adjust it (`lpoptions -p dcpt300 -o device-uri=...`) if
+> your connection differs.

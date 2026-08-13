@@ -9,6 +9,7 @@ maintainer="Suyono Sukorame <suyonosukorame@ymail.com>"
 license="custom:Brother"
 homepage="https://support.brother.com/g/b/downloadtop.aspx?c=in&lang=en&prod=dcpt300_all"
 repository="nonfree"
+mutable_files="/opt/brother/Printers/dcpt300/inf/brdcpt300rc"
 distfiles="https://download.brother.com/welcome/dlf101960/dcpt300lpr-${version}-0.i386.deb"
 checksum=fb46231309028c037d852318677c19fa3ff91b2369014be68691be9102f65750
 nopie=yes
